@@ -11,8 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
     <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css"/>
     <script>
-        // Definir a data de início do relacionamento
-        const startDate = new Date("2020-12-26T00:00:00"); // Data de início do relacionamento
+        const startDate = new Date("2020-12-26T00:00:00");
         const updateCounter = () => {
             const now = new Date();
             const diff = now - startDate;
@@ -37,7 +36,6 @@
 <body class="text-white" style="background-color: rgb(9,10,16);">
     <div class="container d-flex justify-content-center align-items-center">
         <div class="relative rounded-lg rounded-4 shadow-lg p-4 w-lg-450px" style="background-color: #323248">
-            <!-- Barra superior de controle -->
             <div class="absolute top-4 left-4 d-flex gap-2">
                 <div class="w-3 h-3 bg-danger rounded-circle"></div>
                 <div class="w-3 h-3 bg-warning rounded-circle"></div>
@@ -245,7 +243,7 @@
     </div>
 
 
-    <!--begin::Toast-->
+
     <div class="position-fixed top-0 end-0 p-3 z-index-3" style="max-width: 350px;">
         <div id="kt_docs_toast_toggle" class="toast bg-light shadow-lg rounded-4" role="alert" aria-live="assertive"
              aria-atomic="true">
@@ -273,7 +271,6 @@
     <script src="assets/plugins/global/plugins.bundle.js"></script>
     <script src="assets/js/scripts.bundle.js"></script>
     <script src="assets/plugins/custom/typedjs/typedjs.bundle.js"></script>
-
     <script>
         const musicList = [
             "assets/media/All.mp4",
@@ -294,24 +291,26 @@
             audioPlayer.src = musicList[currentTrackIndex];
             audioPlayer.play()
                 .then(() => {
-                    setupVisualizer();  // Inicia o visualizador de batidas assim que a música começar
+
                 })
                 .catch(err => {
                     console.error("Erro ao tentar reproduzir a música:", err);
                 });
         }
 
-        audioPlayer.addEventListener("play", () => {
+        // Função para configurar o visualizador
+        function setupVisualizer() {
             if (!audioContext) {
-                // Criar o AudioContext ao clicar no play do áudio
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
             }
 
-            // Configura o visualizador sempre que o áudio começar
+            // Verificar se já existe uma fonte conectada
             if (source) {
-                source.disconnect(); // Desconectar se já houver uma fonte conectada
+                // Se já existe uma fonte, reconectar para garantir que o analisador está configurado
+                source.disconnect();
             }
 
+            // Criar a fonte de áudio e o analisador
             source = audioContext.createMediaElementSource(audioPlayer);
             analyser = audioContext.createAnalyser();
 
@@ -339,6 +338,46 @@
             }
 
             updateBackground(); // Iniciar o loop de animação
+        }
+
+        // Quando o áudio for iniciado, configurar o visualizador
+        audioPlayer.addEventListener("play", () => {
+            if (!audioContext) {
+                // Criar o AudioContext ao clicar no play do áudio
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            // Verificar se a fonte já está conectada, se sim, não fazer nada
+            if (!source) {
+                // Criar a fonte de áudio e o analisador
+                source = audioContext.createMediaElementSource(audioPlayer);
+                analyser = audioContext.createAnalyser();
+
+                source.connect(analyser);
+                analyser.connect(audioContext.destination);
+
+                analyser.fftSize = 256; // Define a resolução do analisador
+                const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+                // Função para atualizar o fundo com base nas batidas do áudio
+                function updateBackground() {
+                    analyser.getByteFrequencyData(dataArray);
+
+                    // Capturar a frequência média
+                    const average = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+
+                    // Ajustar a cor do fundo com base na intensidade do áudio
+                    const red = Math.min(255, Math.max(50, average * 2));
+                    const green = Math.min(255, Math.max(30, average * 1.5));
+                    const blue = Math.min(255, Math.max(100, average));
+
+                    document.body.style.background = `radial-gradient(circle, rgba(${red},${green},${blue},1) 0%, rgba(9,10,16,1) 70%)`;
+
+                    requestAnimationFrame(updateBackground); // Continuar o loop de animação
+                }
+
+                updateBackground(); // Iniciar o loop de animação
+            }
         });
 
         // Quando o áudio terminar, tocar a próxima música
@@ -377,6 +416,8 @@
             fadeOut: true,   // Suavizar ao apagar
         });
     </script>
+
+
 
 
 

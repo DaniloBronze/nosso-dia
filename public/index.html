@@ -210,7 +210,7 @@
                     <span id="kt_typedjs_example_1" class="fs-1 fw-bold"></span>
                     <div class="relative rounded-lg p-3">
                         <!-- Player de música -->
-                        <audio id="audioPlayer" controls autoplay class="w-full rounded mb-4">
+                        <audio id="audioPlayer" controls class="w-full rounded mb-4">
                             <source src="assets/media/All.mp4" type="audio/mpeg">
                             Seu navegador não suporta o player de áudio.
                         </audio>
@@ -284,39 +284,48 @@
 
         const audioPlayer = document.getElementById("audioPlayer");
         let currentTrackIndex = 0;
+        let audioContext;
+        let analyser;
+        let source;
 
+        // Função para tocar a música
         function playMusic(index) {
             currentTrackIndex = index;
             audioPlayer.src = musicList[currentTrackIndex];
-            audioPlayer.play();
-            setupVisualizer();
+            audioPlayer.play()
+                .then(() => {
+                    setupVisualizer();  // Inicia o visualizador de batidas assim que a música começar
+                })
+                .catch(err => {
+                    console.error("Erro ao tentar reproduzir a música:", err);
+                });
         }
 
-        audioPlayer.addEventListener("ended", () => {
-            currentTrackIndex = (currentTrackIndex + 1) % musicList.length;
-            playMusic(currentTrackIndex);
-        });
+        audioPlayer.addEventListener("play", () => {
+            if (!audioContext) {
+                // Criar o AudioContext ao clicar no play do áudio
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
 
-        playMusic(0);
+            // Configura o visualizador sempre que o áudio começar
+            if (source) {
+                source.disconnect(); // Desconectar se já houver uma fonte conectada
+            }
 
-        // to usando Web Audio API
-        function setupVisualizer() {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const analyser = audioContext.createAnalyser();
-            const source = audioContext.createMediaElementSource(audioPlayer);
+            source = audioContext.createMediaElementSource(audioPlayer);
+            analyser = audioContext.createAnalyser();
 
-            // Conectar o áudio à análise e aos alto-falantes
             source.connect(analyser);
             analyser.connect(audioContext.destination);
 
             analyser.fftSize = 256; // Define a resolução do analisador
             const dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-            // Atualizar o fundo com base nas batidas
+            // Função para atualizar o fundo com base nas batidas do áudio
             function updateBackground() {
                 analyser.getByteFrequencyData(dataArray);
 
-                // Capturar a frequência média top demais minha gente
+                // Capturar a frequência média
                 const average = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
 
                 // Ajustar a cor do fundo com base na intensidade do áudio
@@ -329,9 +338,19 @@
                 requestAnimationFrame(updateBackground); // Continuar o loop de animação
             }
 
-            updateBackground(); // Inicia a animação
-        }
+            updateBackground(); // Iniciar o loop de animação
+        });
 
+        // Quando o áudio terminar, tocar a próxima música
+        audioPlayer.addEventListener("ended", () => {
+            currentTrackIndex = (currentTrackIndex + 1) % musicList.length;
+            playMusic(currentTrackIndex);
+        });
+
+        // Iniciar a música padrão
+        playMusic(0);
+
+        // Função para exibir toast (como está no seu código original)
         const button = document.getElementById('kt_docs_toast_toggle_button');
         const toastElement = document.getElementById('kt_docs_toast_toggle');
 
@@ -342,6 +361,7 @@
             toast.show();
         });
 
+        // Inicializar o efeito de digitação
         var typed = new Typed("#kt_typedjs_example_1", {
             strings: [
                 "✨ A nossa música favorita...",
@@ -356,8 +376,9 @@
             loop: true,      // Repetição infinita
             fadeOut: true,   // Suavizar ao apagar
         });
-
     </script>
+
+
 
 </body>
 </html>

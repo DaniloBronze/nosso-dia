@@ -12,7 +12,7 @@
 
 /* Estilo de fundo pulsante com a batida da música */
 body {
-    padding: 0;
+    padding: 2%;
     margin: 0;
     background: radial-gradient(circle, rgba(29, 29, 39, 1) 0%, rgba(9, 10, 16, 1) 70%);
     transition: background-color 0.2s ease-in-out;

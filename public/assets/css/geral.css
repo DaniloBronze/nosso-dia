@@ -10,25 +10,56 @@
     height: 500px;  /* Altura fixa para todas as imagens */
 }
 
+/* Estilo de fundo pulsante com a batida da música */
 body {
-    padding:0;
+    padding: 0;
     margin: 0;
     background: radial-gradient(circle, rgba(29, 29, 39, 1) 0%, rgba(9, 10, 16, 1) 70%);
     transition: background-color 0.2s ease-in-out;
 }
 
+@keyframes pulse {
+    0% {
+        background-color: rgba(255, 0, 0, 0.3);
+        box-shadow: 0 0 50px rgba(255, 0, 0, 0.4);
+    }
+    50% {
+        background-color: rgba(0, 255, 255, 0.3);
+        box-shadow: 0 0 100px rgba(0, 255, 255, 0.5);
+    }
+    100% {
+        background-color: rgba(255, 0, 255, 0.3);
+        box-shadow: 0 0 150px rgba(255, 0, 255, 0.6);
+    }
+}
+
+/* Adicionar um efeito de animação pulsante */
 .pulse-bg {
     animation: pulse 1s infinite;
 }
 
-@keyframes pulse {
+/* Efeitos extras de brilho nas partículas */
+.pulse-bg-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.1), rgba(9, 10, 16, 0.5));
+    animation: particle-pulse 2s infinite;
+}
+
+@keyframes particle-pulse {
     0% {
-        background-color: rgba(255, 0, 0, 0.3);
+        opacity: 0.1;
+        transform: scale(0.9);
     }
     50% {
-        background-color: rgba(0, 255, 255, 0.3);
+        opacity: 0.3;
+        transform: scale(1);
     }
     100% {
-        background-color: rgba(255, 0, 255, 0.3);
+        opacity: 0.1;
+        transform: scale(0.9);
     }
 }

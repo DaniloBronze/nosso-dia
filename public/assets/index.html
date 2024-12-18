@@ -6,10 +6,10 @@
     <title>Nosso Dia</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link href="css/style.bundle.css" rel="stylesheet" type="text/css"/>
-    <link href="css/geral.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/geral.css" rel="stylesheet" type="text/css"/>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-    <link href="plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css"/>
     <script>
         // Definir a data de início do relacionamento
         const startDate = new Date("2020-12-26T00:00:00"); // Data de início do relacionamento
@@ -77,7 +77,7 @@
                     <div class="carousel-inner rounded">
                         <!-- Slide 1 -->
                         <div class="carousel-item active">
-                            <img src="media/IMG-20220201-WA0060.jpg" class="d-block w-100 rounded fixed-carousel-img"
+                            <img src="assets/media/IMG-20220201-WA0060.jpg" class="d-block w-100 rounded fixed-carousel-img"
                                  alt="Primeiro Encontro">
                             <div class="carousel-caption d-md-block">
                                 <h5 class="badge bg-info text-white">Nosso Primeiro Encontro</h5>
@@ -87,7 +87,7 @@
 
                         <!-- Slide 2 -->
                         <div class="carousel-item">
-                            <img src="media/IMG-20220522-WA0019.jpg" class="d-block w-100 rounded fixed-carousel-img"
+                            <img src="assets/media/IMG-20220522-WA0019.jpg" class="d-block w-100 rounded fixed-carousel-img"
                                  alt="Viagem Inesquecível">
                             <div class="carousel-caption d-md-block">
                                 <h5 class="badge bg-info text-white">Viagem Inesquecível</h5>
@@ -97,7 +97,7 @@
 
                         <!-- Slide 3 -->
                         <div class="carousel-item">
-                            <img src="media/IMG-20221003-WA0002.jpg" class="d-block w-100 rounded fixed-carousel-img"
+                            <img src="assets/media/IMG-20221003-WA0002.jpg" class="d-block w-100 rounded fixed-carousel-img"
                                  alt="Dia Especial">
                             <div class="carousel-caption d-md-block">
                                 <h5 class="badge bg-info text-white">Mais um Dia Especial</h5>
@@ -107,7 +107,7 @@
 
                         <!-- Slide 4 -->
                         <div class="carousel-item">
-                            <img src="media/IMG-20221227-WA0061.jpg" class="d-block w-100 rounded fixed-carousel-img"
+                            <img src="assets/media/IMG-20221227-WA0061.jpg" class="d-block w-100 rounded fixed-carousel-img"
                                  alt="Amor Inesquecível">
                             <div class="carousel-caption d-md-block">
                                 <h5 class="badge bg-info text-white">Amor Inesquecível</h5>
@@ -117,7 +117,7 @@
 
                         <!-- Slide 5 -->
                         <div class="carousel-item">
-                            <img src="media/IMG_20221113_011009_478.jpg"
+                            <img src="assets/media/IMG_20221113_011009_478.jpg"
                                  class="d-block w-100 rounded fixed-carousel-img" alt="Passeio Maravilhoso">
                             <div class="carousel-caption d-md-block">
                                 <h5 class="badge bg-info text-white">Passeio Maravilhoso</h5>
@@ -127,7 +127,7 @@
 
                         <!-- Slide 6 -->
                         <div class="carousel-item">
-                            <img src="media/IMG_20221113_011120_609.jpg"
+                            <img src="assets/media/IMG_20221113_011120_609.jpg"
                                  class="d-block w-100 rounded fixed-carousel-img" alt="Mais um Dia Lindo">
                             <div class="carousel-caption d-md-block">
                                 <h5 class="badge bg-info text-white">Mais um Dia Lindo</h5>
@@ -137,7 +137,7 @@
 
                         <!-- Slide 7 -->
                         <div class="carousel-item">
-                            <img src="media/IMG_20221227_164220_834.jpg"
+                            <img src="assets/media/IMG_20221227_164220_834.jpg"
                                  class="d-block w-100 rounded fixed-carousel-img" alt="Lembranças Felizes">
                             <div class="carousel-caption d-md-block">
                                 <h5 class="badge bg-info text-white">Lembranças Felizes</h5>
@@ -147,7 +147,7 @@
 
                         <!-- Slide 8 -->
                         <div class="carousel-item">
-                            <img src="media/IMG_20221227_164913_586.jpg"
+                            <img src="assets/media/carnaval.jpg"
                                  class="d-block w-100 rounded fixed-carousel-img" alt="Sonhos Compartilhados">
                             <div class="carousel-caption d-md-block">
                                 <h5 class="badge bg-info text-white">Sonhos Compartilhados</h5>
@@ -207,7 +207,7 @@
                 <div class="relative rounded-lg p-3">
                     <!-- Player de música -->
                     <audio id="audioPlayer" controls autoplay class="w-full rounded mb-4">
-                        <source src="media/All.mp4" type="audio/mpeg">
+                        <source src="assets/media/All.mp4" type="audio/mpeg">
                         Seu navegador não suporta o player de áudio.
                     </audio>
 
@@ -259,17 +259,21 @@
 </div>
 <!--end::Toast-->
 
+<footer>
+    <div class="container text-center text-white mt-5 mb-5">
+        <p class="mb-0">Desenvolvido com ❤️ por <a href="#" class="text-white">Danilo</a></p>
+</footer>
 
-<script src="plugins/global/plugins.bundle.js"></script>
-<script src="js/scripts.bundle.js"></script>
-<script src="plugins/custom/typedjs/typedjs.bundle.js"></script>
+<script src="assets/plugins/global/plugins.bundle.js"></script>
+<script src="assets/js/scripts.bundle.js"></script>
+<script src="assets/plugins/custom/typedjs/typedjs.bundle.js"></script>
 
 <script>
     const musicList = [
-        "media/All.mp4",
-        "media/Crazy.mp4",
-        "media/Die.mp4",
-        "media/until-i-found-you.mp4",
+        "assets/media/All.mp4",
+        "assets/media/Crazy.mp4",
+        "assets/media/Die.mp4",
+        "assets/media/until-i-found-you.mp4",
     ];
     const audioPlayer = document.getElementById("audioPlayer");
 

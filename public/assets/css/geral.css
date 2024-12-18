@@ -1,5 +1,15 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .fixed-carousel-img {
     object-fit: cover;
     width: 100%;  /* Ocupa toda a largura */
-    height: 600px;  /* Altura fixa para todas as imagens */
+    height: 500px;  /* Altura fixa para todas as imagens */
+}
+
+body {
+    padding: 2%;
 }

@@ -1,0 +1,5 @@
+.fixed-carousel-img {
+    object-fit: cover;
+    width: 100%;  /* Ocupa toda a largura */
+    height: 600px;  /* Altura fixa para todas as imagens */
+}

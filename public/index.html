@@ -285,38 +285,63 @@
         const audioPlayer = document.getElementById("audioPlayer");
         let currentTrackIndex = 0;
 
-        // Função para tocar a música
         function playMusic(index) {
-            currentTrackIndex = index; // Atualiza o índice atual
-            audioPlayer.src = musicList[currentTrackIndex]; // Define o caminho da música
-            audioPlayer.play(); // Toca a música
+            currentTrackIndex = index;
+            audioPlayer.src = musicList[currentTrackIndex];
+            audioPlayer.play();
+            setupVisualizer();
         }
 
-        // Evento para avançar automaticamente para a próxima música ao terminar
         audioPlayer.addEventListener("ended", () => {
-            currentTrackIndex = (currentTrackIndex + 1) % musicList.length; // Vai para a próxima música ou reinicia a playlist
+            currentTrackIndex = (currentTrackIndex + 1) % musicList.length;
             playMusic(currentTrackIndex);
         });
 
-        // Começa a tocar a primeira música ao carregar a página
         playMusic(0);
 
-        // Select elements
+        // To usando Web Audio API
+        function setupVisualizer() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const analyser = audioContext.createAnalyser();
+            const source = audioContext.createMediaElementSource(audioPlayer);
+
+            // Conectar o áudio à análise e aos alto-falantes
+            source.connect(analyser);
+            analyser.connect(audioContext.destination);
+
+            analyser.fftSize = 256; // Define a resolução do analisador
+            const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+            // Atualizar o fundo com base nas batidas
+            function updateBackground() {
+                analyser.getByteFrequencyData(dataArray);
+
+                // Capturar a frequência média top demais minha gente
+                const average = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+
+                // Ajustar a cor do fundo com base na intensidade do áudio
+                const red = Math.min(255, Math.max(50, average * 2));
+                const green = Math.min(255, Math.max(30, average * 1.5));
+                const blue = Math.min(255, Math.max(100, average));
+
+                document.body.style.background = `radial-gradient(circle, rgba(${red},${green},${blue},1) 0%, rgba(9,10,16,1) 70%)`;
+
+                requestAnimationFrame(updateBackground); // Continuar o loop de animação
+            }
+
+            updateBackground(); // Inicia a animação
+        }
+
         const button = document.getElementById('kt_docs_toast_toggle_button');
         const toastElement = document.getElementById('kt_docs_toast_toggle');
 
-        // Get toast instance --- more info: https://getbootstrap.com/docs/5.1/components/toasts/#getinstance
         const toast = bootstrap.Toast.getOrCreateInstance(toastElement);
 
-        // Handle button click
         button.addEventListener('click', e => {
             e.preventDefault();
-
-            // Toggle toast to show --- more info: https://getbootstrap.com/docs/5.1/components/toasts/#show
             toast.show();
         });
 
-        // Inicialização do Typed.js com melhorias
         var typed = new Typed("#kt_typedjs_example_1", {
             strings: [
                 "✨ A nossa música favorita...",

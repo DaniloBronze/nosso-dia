@@ -218,22 +218,30 @@
                         </audio>
 
                         <!-- Botões para trocar de música -->
-                        <div class="flex justify-center gap-4">
+                        <div class="flex justify-center gap-2">
                             <button onclick="playMusic(0)"
-                                    class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-500 text-white font-bold shadow">
+                                    class="px-4 py-2 fs-8 rounded bg-blue-600 hover:bg-blue-500 text-white font-bold shadow">
                                 All of Me 🎧
                             </button>
                             <button onclick="playMusic(1)"
-                                    class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-500 text-white font-bold shadow">
+                                    class="px-4 py-2 fs-8 rounded bg-blue-600 hover:bg-blue-500 text-white font-bold shadow">
                                 Crazy 🎧
                             </button>
                             <button onclick="playMusic(2)"
-                                    class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-500 text-white font-bold shadow">
+                                    class="px-4 py-2 rounded fs-8 bg-blue-600 hover:bg-blue-500 text-white font-bold shadow">
                                 Die 🎧
                             </button>
                             <button onclick="playMusic(3)"
-                                    class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-500 text-white font-bold shadow">
+                                    class="px-4 py-2 rounded fs-8 bg-blue-600 hover:bg-blue-500 text-white font-bold shadow">
                                 Until 🎧
+                            </button>
+                            <button onclick="playMusic(4)"
+                                    class="px-4 py-2 rounded fs-8 bg-blue-600 hover:bg-blue-500 text-white font-bold shadow">
+                                Foreigner 🎧
+                            </button>
+                            <button onclick="playMusic(5)"
+                                    class="px-4 py-2 rounded fs-8 bg-blue-600 hover:bg-blue-500 text-white font-bold shadow">
+                                Baker Street 🎧
                             </button>
                         </div>
                     </div>
@@ -281,6 +289,8 @@
             "assets/media/Crazy.mp4",
             "assets/media/Die.mp4",
             "assets/media/until-i-found-you.mp4",
+            "assets/media/Foreigner.mp3",
+            "assets/media/baker-street.mp3",
         ];
 
         const audioPlayer = document.getElementById("audioPlayer");

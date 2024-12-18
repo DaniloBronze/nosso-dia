@@ -5,6 +5,7 @@ const musicList = [
     "assets/media/until-i-found-you.mp4",
     "assets/media/Foreigner.mp3",
     "assets/media/baker-street.mp3",
+    "assets/media/Heaven.mp3",
 ];
 
 const audioPlayer = document.getElementById("audioPlayer");

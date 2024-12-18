@@ -63,3 +63,17 @@ body {
         transform: scale(0.9);
     }
 }
+
+/* Oculta o player e o visualizador em telas grandes */
+@media (min-width: 768px) {
+    #batidas_canvas {
+        display: none;
+    }
+}
+
+/* Exibe o player e o visualizador apenas em telas pequenas */
+@media (max-width: 767px) {
+    #batidas_canvas {
+        display: block;
+    }
+}

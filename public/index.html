@@ -206,6 +206,10 @@
                 <div class="w-100 mb-5 overflow-hidden rounded  p-3">
                     <h4 class="text-center mb-3 font-bold text-lg text-white">🎵 Nossa Playlist 🎶</h4>
                     <span id="kt_typedjs_example_1" class="fs-1 fw-bold"></span>
+
+                    <canvas id="batidas_canvas" class="mx-auto rounded-4" width="150" height="150"></canvas>
+
+
                     <div class="relative rounded-lg p-3">
                         <!-- Player de música -->
                         <audio id="audioPlayer" controls class="w-full rounded mb-4">
@@ -280,6 +284,8 @@
         ];
 
         const audioPlayer = document.getElementById("audioPlayer");
+        const canvas = document.getElementById("batidas_canvas");
+        const ctx = canvas.getContext("2d");
         let currentTrackIndex = 0;
         let audioContext;
         let analyser;
@@ -290,9 +296,7 @@
             currentTrackIndex = index;
             audioPlayer.src = musicList[currentTrackIndex];
             audioPlayer.play()
-                .then(() => {
-
-                })
+                .then(() => {})
                 .catch(err => {
                     console.error("Erro ao tentar reproduzir a música:", err);
                 });
@@ -304,9 +308,7 @@
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
             }
 
-            // Verificar se já existe uma fonte conectada
             if (source) {
-                // Se já existe uma fonte, reconectar para garantir que o analisador está configurado
                 source.disconnect();
             }
 
@@ -320,8 +322,8 @@
             analyser.fftSize = 256; // Define a resolução do analisador
             const dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-            // Função para atualizar o fundo com base nas batidas do áudio
-            function updateBackground() {
+            // Função para atualizar o fundo e o canvas com base nas batidas do áudio
+            function updateVisualizer() {
                 analyser.getByteFrequencyData(dataArray);
 
                 // Capturar a frequência média
@@ -334,49 +336,93 @@
 
                 document.body.style.background = `radial-gradient(circle, rgba(${red},${green},${blue},1) 0%, rgba(9,10,16,1) 70%)`;
 
-                requestAnimationFrame(updateBackground); // Continuar o loop de animação
+                // Limpar o canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Desenhar o coração pulsante no centro
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const heartSize = average / 1.2;  // O tamanho do coração depende da intensidade do áudio
+
+                // Ajustar a cor do coração
+                const heartColor = `rgb(${Math.min(255, average * 2)}, ${Math.min(255, average * 1.5)}, ${255 - average})`;
+
+                // Desenhar o coração pulsante
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY + heartSize / 4);
+
+                // Lado esquerdo do coração
+                ctx.bezierCurveTo(centerX - heartSize / 2, centerY - heartSize / 2, centerX - heartSize, centerY + heartSize / 2, centerX, centerY + heartSize);
+
+                // Lado direito do coração
+                ctx.bezierCurveTo(centerX + heartSize, centerY + heartSize / 2, centerX + heartSize / 2, centerY - heartSize / 2, centerX, centerY + heartSize / 4);
+
+                ctx.closePath();
+                ctx.fillStyle = heartColor;
+                ctx.fill();
+
+                requestAnimationFrame(updateVisualizer); // Continuar o loop de animação
             }
 
-            updateBackground(); // Iniciar o loop de animação
+            updateVisualizer(); // Iniciar o loop de animação
         }
 
         // Quando o áudio for iniciado, configurar o visualizador
         audioPlayer.addEventListener("play", () => {
             if (!audioContext) {
-                // Criar o AudioContext ao clicar no play do áudio
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
             }
 
-            // Verificar se a fonte já está conectada, se sim, não fazer nada
             if (!source) {
-                // Criar a fonte de áudio e o analisador
                 source = audioContext.createMediaElementSource(audioPlayer);
                 analyser = audioContext.createAnalyser();
 
                 source.connect(analyser);
                 analyser.connect(audioContext.destination);
 
-                analyser.fftSize = 256; // Define a resolução do analisador
+                analyser.fftSize = 256;
                 const dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-                // Função para atualizar o fundo com base nas batidas do áudio
-                function updateBackground() {
+                function updateVisualizer() {
                     analyser.getByteFrequencyData(dataArray);
 
-                    // Capturar a frequência média
+                    // Atualizar o fundo
                     const average = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
-
-                    // Ajustar a cor do fundo com base na intensidade do áudio
                     const red = Math.min(255, Math.max(50, average * 2));
                     const green = Math.min(255, Math.max(30, average * 1.5));
                     const blue = Math.min(255, Math.max(100, average));
 
                     document.body.style.background = `radial-gradient(circle, rgba(${red},${green},${blue},1) 0%, rgba(9,10,16,1) 70%)`;
 
-                    requestAnimationFrame(updateBackground); // Continuar o loop de animação
+                    // Limpar o canvas e desenhar o coração pulsante
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    // Desenhar o coração pulsante no centro
+                    const centerX = canvas.width / 1.8;
+                    const centerY = canvas.height / 4;
+                    const heartSize = average / 0.9;  // O tamanho do coração depende da intensidade do áudio
+
+                    // Ajustar a cor do coração
+                    const heartColor = `rgb(${Math.min(255, average * 2)}, ${Math.min(255, average * 1.5)}, ${255 - average})`;
+
+                    // Desenhar o coração pulsante
+                    ctx.beginPath();
+                    ctx.moveTo(centerX, centerY + heartSize / 4);
+
+                    // Lado esquerdo do coração
+                    ctx.bezierCurveTo(centerX - heartSize / 2, centerY - heartSize / 2, centerX - heartSize, centerY + heartSize / 2, centerX, centerY + heartSize);
+
+                    // Lado direito do coração
+                    ctx.bezierCurveTo(centerX + heartSize, centerY + heartSize / 2, centerX + heartSize / 2, centerY - heartSize / 2, centerX, centerY + heartSize / 4);
+
+                    ctx.closePath();
+                    ctx.fillStyle = heartColor;
+                    ctx.fill();
+
+                    requestAnimationFrame(updateVisualizer); // Continuar o loop de animação
                 }
 
-                updateBackground(); // Iniciar o loop de animação
+                updateVisualizer();
             }
         });
 
@@ -388,7 +434,6 @@
 
         // Iniciar a música padrão
         playMusic(0);
-
         // Função para exibir toast (como está no seu código original)
         const button = document.getElementById('kt_docs_toast_toggle_button');
         const toastElement = document.getElementById('kt_docs_toast_toggle');

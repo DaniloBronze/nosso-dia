@@ -1,21 +1,22 @@
-async function checkPassword(password) {
-    try {
-        const response = await fetch('https://nosso-dia-delta.vercel.app/api/verify-password.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ password }),
-        });
+async function checkPassword() {
+    const password = document.getElementById('password-input').value;
 
-        if (response.ok) {
-            const data = await response.json();
-            console.log(data.message); // Sucesso
-        } else {
-            const error = await response.json();
-            console.error(error.error); // Erro
-        }
-    } catch (error) {
-        console.error('Erro ao chamar a API:', error);
+    // Enviando a senha para o backend
+    const response = await fetch('/api/verify-password.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password })
+    });
+
+    const result = await response.json();
+    if (result.success) {
+        // Exibindo a mensagem retornada
+        document.getElementById('password-section').style.display = 'none';
+        document.getElementById('message-section').style.display = 'block';
+        document.getElementById('message-content').textContent = result.message;
+    } else {
+        // Exibindo erro
+        document.getElementById('password-error').textContent = result.error;
+        document.getElementById('password-error').style.display = 'block';
     }
 }

@@ -12,6 +12,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
+      "methods": ["GET", "POST"],
       "dest": "/api/$1"
     },
     {

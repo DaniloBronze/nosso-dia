@@ -1,8 +1,8 @@
 async function checkPassword() {
     const password = document.getElementById('password-input').value;
 
-    // Enviando a senha para o backend
-    const response = await fetch('/api/verify-password.php', {
+    // Enviando a senha para o backend com URL absoluta
+    const response = await fetch('https://nosso-dia-danilobronze-danilobronzes-projects.vercel.app/api/verify-password.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password })

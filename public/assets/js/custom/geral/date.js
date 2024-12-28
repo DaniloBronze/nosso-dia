@@ -14,8 +14,6 @@ const updateCounter = () => {
 
     document.getElementById('time-together').innerHTML =
         `${years} anos, ${months} meses, ${exactDays} dias, ${hours % 24} horas, ${minutes % 60} minutos e ${seconds % 60} segundos`;
-
-    document.getElementById('time-together-year').innerHTML = `${years} anos`;
 };
 
 setInterval(updateCounter, 1000);

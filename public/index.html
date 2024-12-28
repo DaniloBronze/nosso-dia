@@ -214,30 +214,24 @@
 
                 <div class="border-top opacity-25 mb-3"></div>
 
-               <div class="card card-bordered">
-    <div class="card-header ribbon">
-        <div class="card-title">I LOVE YOU ❤️</div>
-        <div class="ribbon-label bg-primary rounded-4">💖</div>
-    </div>
-    <div class="card-body">
-        <div id="password-protected-content" style="display: none;">
-            <p class="h6">
-                Desde aquele dia em que te encontrei na igreja, enquanto eu estava no ônibus e já tinha decidido
-                que queria você na minha vida, até hoje, depois de <span id="time-together-year"
-                                                                         class="badge badge-primary"></span>, eu
-                vejo que
-                faria tudo de novo se precisasse. Não me arrependo de nada.
-                <br><br>
-                Te amo do jeitinho que você é e sempre vou te amar. 💖
-            </p>
-        </div>
-        <div id="password-input" class="text-center">
-            <input type="password" id="password" placeholder="Digite a senha" class="form-control mb-3">
-            <button onclick="checkPassword()" class="btn btn-primary">Ver Carta</button>
-        </div>
-    </div>
-</div>
-
+                <div class="card card-bordered">
+                    <div class="card-header ribbon">
+                        <div class="card-title">I LOVE YOU ❤️</div>
+                        <div class="ribbon-label bg-primary rounded-4">💖</div>
+                    </div>
+                    <div class="card-body">
+                        <div id="password-section">
+                            <p class="h6">Digite a senha para ver a mensagem:</p>
+                            <input type="password" id="password-input" class="form-control mb-3" placeholder="Senha">
+                            <button onclick="checkPassword()" class="btn btn-primary">Ver Mensagem</button>
+                            <p id="password-error" class="text-danger mt-2" style="display: none;">Senha incorreta. Tente novamente.</p>
+                        </div>
+                        <div id="message-section" style="display: none;">
+                            <p class="h6" id="message-content"></p>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="border-top opacity-25 mt-3"></div>
 
                 <!-- Player de Música -->
@@ -328,6 +322,7 @@
     <script src="assets/js/custom/geral/play.js"></script>
     <script src="assets/js/custom/geral/toast.js"></script>
     <script src="assets/js/custom/geral/type.js"></script>
+    <script src="assets/js/custom/geral/checkPassword.js"></script>
 
 
 

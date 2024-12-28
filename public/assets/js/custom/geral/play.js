@@ -62,10 +62,10 @@ function setupVisualizer() {
         const centerY = canvas.height / 2;
         const heartSize = average / 1.2;  // O tamanho do coração depende da intensidade do áudio
 
-        // Ajustar a cor do coração
+        // arrumar a cor do coração
         const heartColor = `rgb(${Math.min(255, average * 2)}, ${Math.min(255, average * 1.5)}, ${255 - average})`;
 
-        // Desenhar o coração pulsante
+        // Desenhar o coração
         ctx.beginPath();
         ctx.moveTo(centerX, centerY + heartSize / 4);
 
@@ -82,7 +82,6 @@ function setupVisualizer() {
 
     updateVisualizer();
 }
-
 
 audioPlayer.addEventListener("play", () => {
     if (!audioContext) {
